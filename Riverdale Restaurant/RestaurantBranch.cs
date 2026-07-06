@@ -21,9 +21,9 @@ namespace Riverdale_Restaurant
         {
             _staffList.Add(staff);
         }
-        public void ShowStaff(List<Staff> staffList)
+        public void ShowStaff()
         {
-            foreach (var staff in staffList)
+            foreach (var staff in _staffList)
             {
                 staff.Print();
             }
