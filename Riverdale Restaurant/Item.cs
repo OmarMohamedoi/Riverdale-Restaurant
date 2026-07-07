@@ -7,6 +7,8 @@ namespace Riverdale_Restaurant
 {
     public class Item
     {
+        public static int nextID = 0;
+        public int ID { get; private set; } 
         public decimal Price { get; private set; }
         public string Description { get; private set; }
         public string Name { get; private set; }
@@ -19,11 +21,13 @@ namespace Riverdale_Restaurant
             Description = description;
             Name = name;
             Category = category;
+            nextID += 1;
+            ID = nextID;
         }
 
         public void DisplayItemDetails()
         {
-            Console.WriteLine($"Name: {Name}, Description: {Description}, Price: {Price}, Category: {Category}");
+            Console.WriteLine($"ID: {ID}, Name: {Name}, Description: {Description}, Price: {Price}, Quantity: {Quantity},  Category: {Category}");
         }
 
         public void AddStock(int amount)

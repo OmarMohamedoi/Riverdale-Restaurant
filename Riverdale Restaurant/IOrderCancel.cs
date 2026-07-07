@@ -6,6 +6,6 @@ namespace Riverdale_Restaurant
 {
     public interface IOrderCancel
     {
-        public void CancelOrder();
+        public void CancelOrder(Order order);
     }
 }

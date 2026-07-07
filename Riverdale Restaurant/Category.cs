@@ -6,7 +6,7 @@ namespace Riverdale_Restaurant
 {
     public enum Category
     {
-        Appetizer,
+        Appetizer = 1,
         MainCourse,
         Drink,
         Dessert

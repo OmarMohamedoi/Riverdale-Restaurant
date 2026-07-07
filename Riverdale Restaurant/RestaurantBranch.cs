@@ -9,6 +9,9 @@ namespace Riverdale_Restaurant
         public string Name { get; private set; }
         public string Location { get; private set; }
 
+        private Menu _menu = new Menu();
+        public Menu GetMenu() => _menu;
+
         private List<Staff> _staffList = new List<Staff>();
         private List<Order> _orders = new();
 
@@ -17,6 +20,27 @@ namespace Riverdale_Restaurant
             Name = "RiverDale";
             Location = "NewYork";
         }
+        public void AddOrder(Order order)
+        {
+            bool tableHasActiveOrder = false; // Only one order per table
+
+            foreach (var o in _orders)
+            {
+                if (o.TableNumber == order.TableNumber &&
+                    o.Status != OrderProgress.Served &&
+                    o.Status != OrderProgress.Cancelled)
+                {
+                    tableHasActiveOrder = true;
+                    break; 
+                }
+            }
+
+            if (tableHasActiveOrder)
+                throw new InvalidOperationException($"Table {order.TableNumber} already has an active order.");
+
+            _orders.Add(order);
+        }
+        public IEnumerable<Order> GetOrders() => _orders;
 
         public void AddStaff(Staff staff)
         {
@@ -30,5 +54,13 @@ namespace Riverdale_Restaurant
             }
             
         }
+        public void ShowOrders()
+        {
+            foreach (var order in _orders)
+            {
+                order.DisplayOrder();
+            }
+        }
+        public IEnumerable<Staff> GetAllStaff() => _staffList;
     }
 }
