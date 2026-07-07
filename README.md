@@ -1,7 +1,7 @@
 # Riverdale Restaurant Console System
 
-Simple OOP Project practising proper SOLID principles and applying them to work.
-This code is fully written by hand without the use of AI.
+A simple OOP project focused on properly applying SOLID principles in practice.
+Every line of this code was written by hand without the help of Ai.
 
 ## About
 
