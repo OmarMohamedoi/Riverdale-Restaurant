@@ -6,10 +6,42 @@ namespace Riverdale_Restaurant
 {
     public class Order
     {
+        private static int _nextOrderId = 1;
+        public int OrderId { get; private set; }
         private List<OrderLine> _orderLines = new List<OrderLine>();
         public int TableNumber { get; private set; }
 
         private OrderProgress status;
+
+        public OrderProgress Status => status;
+
+        public IEnumerable<OrderLine> GetOrderLines() => _orderLines;
+
+
+        public Order(int tableNumber)
+        {
+            TableNumber = tableNumber;
+            status = OrderProgress.Pending;
+            OrderId = _nextOrderId; 
+            _nextOrderId++;
+        }
+        public void DisplayOrder()
+        {
+            Console.WriteLine($"Order number: {OrderId}, Table Number: {TableNumber}, Status: {Status}");
+        }
+        public decimal TotalOrderPrice()
+        {
+            decimal total = 0;
+            foreach (var item in _orderLines)
+            {
+                total += item.LineTotal;
+            }
+            return total;
+        }
+        public void AddOrderLine(OrderLine orderLine)
+        {
+            _orderLines.Add(orderLine);
+        }
 
         public void Process()
         {
@@ -18,7 +50,7 @@ namespace Riverdale_Restaurant
                 OrderProgress.Pending => OrderProgress.Preparing,
                 OrderProgress.Preparing => OrderProgress.Ready,
                 OrderProgress.Ready => OrderProgress.Served,
-                _ => throw new InvalidOperationException("Order already served.")
+                _ => throw new InvalidOperationException($"Cannot process an order with status {status}.")
             };
         }
 

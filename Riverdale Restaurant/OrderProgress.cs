@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Riverdale_Restaurant
 {
-    internal enum OrderProgress
+    public enum OrderProgress
     {
         Pending,
         Preparing,

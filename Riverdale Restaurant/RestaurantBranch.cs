@@ -10,6 +10,7 @@ namespace Riverdale_Restaurant
         public string Location { get; private set; }
 
         private List<Staff> _staffList = new List<Staff>();
+        private List<Order> _orders = new();
 
         public RestaurantBranch()
         {

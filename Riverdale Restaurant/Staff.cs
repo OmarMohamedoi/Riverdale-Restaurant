@@ -15,6 +15,7 @@ namespace Riverdale_Restaurant
         {
             Console.WriteLine($"Name: {Name}");
         }
-        public abstract void ShowMenu();
+        public abstract void ShowRoleMenu();
+        public abstract void ProcessRoleMenu();
     }
 }
