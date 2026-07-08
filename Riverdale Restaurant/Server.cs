@@ -54,12 +54,83 @@ namespace Riverdale_Restaurant
                 order.Process(); 
             }
         }
+        public void CreateOrder(RestaurantBranch restaurantBranch)
+        {
+            Console.Write("Enter table number: ");
+            if (!int.TryParse(Console.ReadLine(), out int tableNumber))
+            {
+                Console.WriteLine("Invalid table number.");
+                return;
+            }
+            Order newOrder = new Order(tableNumber);
+            while (true)
+            {
+                bool found = false;   
+                Console.WriteLine("Please enter the ItemID You wish to add or 0 to finish order.");
+                if(int.TryParse(Console.ReadLine(), out int choice))
+                {
+                    if (choice == 0)
+                    {
+                        break;
+                    }
+                    Item itemptr = null!;
+                   // bool found = false;
+                    foreach (var item in restaurantBranch.GetMenu().GetAllItems())
+                    {
+                        if (item.ID == choice)
+                        {
+                            itemptr = item;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found == false) {
+                        Console.WriteLine( "Item not found");
+                        continue;
+                    }
 
+                    Console.WriteLine("Please enter quantity");
+                    if(int.TryParse(Console.ReadLine(), out int choice2))
+                    {
+                        if (choice2 <= 0)
+                        {
+                            Console.WriteLine("Please enter a valid positive value.");
+                        }
+                        else if (choice2 > itemptr.Quantity)
+                        {
+                            Console.WriteLine("Not enough stock");
+                        }
+                        else 
+                        {
+                            newOrder.AddOrderLine(new OrderLine(itemptr, choice2));
+                            itemptr.ReduceStock(choice2);
+                        }
+                    }
+                    
+
+                }
+            }
+            List<OrderLine> lines = new List<OrderLine>(newOrder.GetOrderLines());
+            if (lines.Count == 0)
+            {
+                Console.WriteLine("Order cancelled — no items were added.");
+                return;
+            }
+            try
+            {
+                restaurantBranch.AddOrder(newOrder);
+                Console.WriteLine("Order placed successfully!");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         public override void ShowRoleMenu(RestaurantBranch restaurantBranch)
         {
             while (true)
             {
-                Console.WriteLine("1-Show customer the menu, 2-Let Customer search with category, 3- Show Pending Orders, 4-Serve one order, 5-Serve all orders, 6- Logout");
+                Console.WriteLine("1-Show customer the menu, 2-Let Customer search with category, 3- Show Ready Orders, 4-Serve one order, 5-Serve all orders, 6-Take customer's Order, 7- Logout");
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     switch (choice)
@@ -133,6 +204,9 @@ namespace Riverdale_Restaurant
                             ServeAllOrders(restaurantBranch.GetOrders());
                             break;
                         case 6:
+                            CreateOrder(restaurantBranch);
+                            break;
+                        case 7:
                             return;
                         default:
                             Console.WriteLine("Invalid Option");

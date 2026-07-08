@@ -20,6 +20,8 @@ namespace Riverdale_Restaurant
 
         public Order(int tableNumber)
         {
+            if (tableNumber < 1 || tableNumber > 20)
+                throw new ArgumentException("TableNumber must be from 1 to 20");
             TableNumber = tableNumber;
             status = OrderProgress.Pending;
             OrderId = _nextOrderId; 
