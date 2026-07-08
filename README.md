@@ -1,11 +1,9 @@
 # Riverdale Restaurant Console System
 
 A simple OOP project focused on properly applying SOLID principles in practice.
-Every line of this code was written by hand without the help of Ai.
-
 ## About
 
-Console-based restaurant system built in C# as an OOP practice project. Staff log in as Manager, Chef, or Server and each get their own set of actions. Everything runs in-memory, no database.
+Console-based restaurant system built in C# as an OOP practice project. Staff log in as Manager, Chef, or Server and each get their own set of actions. 
 
 ## Classes
 
